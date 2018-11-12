@@ -17,6 +17,7 @@ namespace Chessington.GameEngine.Pieces
             {
                 for (int j = -1; j <= 1; j++)
                 {
+                    if (0<= currentSquare.Row+i && currentSquare.Row +i <8 && 0<= currentSquare.Col + j && currentSquare.Col + j<8)
                     availableMoves.Add(Square.At(currentSquare.Row+i,currentSquare.Col+j));
                 }
             }
