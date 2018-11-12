@@ -10,16 +10,9 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            var availableMoves = new List<Square>();
+            var availableMoves = MovementChecker.CheckLateralMovement(board, this);
             var currentSquare = board.FindPiece(this);
-
-            // Lateral movement.
-            for (var i = 0; i < 8; i++)
-                availableMoves.Add(Square.At(currentSquare.Row, i));
-
-            for (var i = 0; i < 8; i++)
-                availableMoves.Add(Square.At(i, currentSquare.Col));
-
+            
             // Diagonal movement.
 
             //Checking the backwards diagonal, i.e. 0,0 1,1, 2,2
