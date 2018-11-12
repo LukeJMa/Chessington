@@ -19,13 +19,23 @@ namespace Chessington.GameEngine.Pieces
             // White piece
             if (Player == Player.White)
             {
+                if (board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col)) != null)
+                {
+                    return Enumerable.Empty<Square>();
+                }
+
                 if (HasMoved)
                 {
-                    return (IEnumerable<Square>) new List<Square>
+                    return new List<Square>
                         {new Square(currentSquare.Row - 1, currentSquare.Col)};
                 }
-                
-                return (IEnumerable<Square>) new List<Square>
+
+                if (board.GetPiece(Square.At(currentSquare.Row - 2, currentSquare.Col)) != null)
+                {
+                    return Enumerable.Empty<Square>();
+                }
+
+                return new List<Square>
                 {
                     new Square(currentSquare.Row - 1, currentSquare.Col),
                     new Square(currentSquare.Row - 2, currentSquare.Col)
@@ -33,25 +43,29 @@ namespace Chessington.GameEngine.Pieces
             }
 
             // Black piece
+
+            if (board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col)) != null)
+            {
+                return Enumerable.Empty<Square>();
+            }
+
             if (HasMoved)
             {
-                return (IEnumerable<Square>)new List<Square>
+                return new List<Square>
                     {new Square(currentSquare.Row + 1, currentSquare.Col)};
             }
 
-            return (IEnumerable<Square>)new List<Square>
+            if (board.GetPiece(Square.At(currentSquare.Row + 2, currentSquare.Col)) != null)
+            {
+                return Enumerable.Empty<Square>();
+            }
+
+            return new List<Square>
             {
                 new Square(currentSquare.Row + 1, currentSquare.Col),
                 new Square(currentSquare.Row + 2, currentSquare.Col)
             };
-
-
-
-
         }
-           
-            
-
-        
+          
     }
 }
