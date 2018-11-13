@@ -38,7 +38,7 @@ namespace Chessington.GameEngine.Pieces
 
             if (!HasMoved)
             {
-                // White 
+               
                 switch (Player)
                 {
                     case Player.White:
