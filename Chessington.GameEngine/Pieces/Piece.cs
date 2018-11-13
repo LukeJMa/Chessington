@@ -15,6 +15,8 @@ namespace Chessington.GameEngine.Pieces
 
         public bool HasMoved { get; private set; }
 
+        public int MoveCount { get; set; }
+
         public abstract IEnumerable<Square> GetAvailableMoves(Board board);
 
         public void MoveTo(Board board, Square newSquare)
@@ -22,6 +24,7 @@ namespace Chessington.GameEngine.Pieces
             var currentSquare = board.FindPiece(this);
             board.MovePiece(currentSquare, newSquare);
             HasMoved = true;
+            MoveCount += 1;
             board.LastMoved = this;
         }
     }

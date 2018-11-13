@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Chessington.GameEngine.Pieces
 {
+
     public class Pawn : Piece
     {
         public Pawn(Player player)
@@ -27,8 +28,9 @@ namespace Chessington.GameEngine.Pieces
                     return availableWhiteMoves;
                 }
 
-                // Add en passant movement
+                // En passant movement
                 if (board.LastMoved is Pawn
+                    && board.LastMoved.MoveCount==1
                     && lastMovedSquare.Row == 3
                     && currentSquare.Row == 3
                 )
@@ -90,8 +92,9 @@ namespace Chessington.GameEngine.Pieces
                 return availableBlackMoves;
             }
 
-            // Add en passant movement
+            // En passant movement
             if (board.LastMoved is Pawn
+                && board.LastMoved.MoveCount == 1
                 && lastMovedSquare.Row == 4
                 && currentSquare.Row == 4
             )
