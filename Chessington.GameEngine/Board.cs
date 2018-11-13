@@ -58,6 +58,39 @@ namespace Chessington.GameEngine
                 OnPieceCaptured(board[to.Row, to.Col]);
             }
 
+            // Check if movement is en passant.
+            if (LastMoved != null
+                && movingPiece is Pawn
+                && LastMoved is Pawn
+                && LastMoved.Player != movingPiece.Player
+                && LastMoved.MoveCount == 1)
+            {
+                var lastMovedSquare = FindPiece(LastMoved);
+
+                // White movement
+                if (movingPiece.Player==Player.White
+                    && lastMovedSquare.Row == 3
+                    && from.Row == 3
+                    && to.Row==2
+                    && to.Col == lastMovedSquare.Col)
+                {
+                    OnPieceCaptured(LastMoved);
+                    board[lastMovedSquare.Row, lastMovedSquare.Col] = null;
+                }
+
+                // Black movement
+                if (movingPiece.Player == Player.Black
+                    && lastMovedSquare.Row == 4
+                    && from.Row == 4
+                    && to.Row ==5
+                    && to.Col == lastMovedSquare.Col)
+                {
+                    OnPieceCaptured(LastMoved);
+                    board[lastMovedSquare.Row, lastMovedSquare.Col] = null;
+                }
+
+            }
+
             //Move the piece and set the 'from' square to be empty.
             board[to.Row, to.Col] = board[from.Row, from.Col];
             board[from.Row, from.Col] = null;
