@@ -118,5 +118,13 @@ namespace Chessington.GameEngine
             var handler = CurrentPlayerChanged;
             if (handler != null) handler(player);
         }
+
+        public bool CheckIfOnBoard(Square square)
+        {
+            return square.Row >= 0
+                   && square.Row < GameSettings.BoardSize
+                   && square.Col >= 0
+                   && square.Col < GameSettings.BoardSize;
+        }
     }
 }

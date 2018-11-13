@@ -116,5 +116,72 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().Contain(Square.At(0, 2));
             moves.Should().Contain(Square.At(0, 6));
         }
+
+        [Test]
+        public void WhiteKings_CannotCastle_PastObstruction()
+        {
+            var board = new Board();
+
+            var king = new King(Player.White);
+            board.AddPiece(Square.At(7, 4), king);
+
+            var leftRook = new Rook(Player.White);
+            board.AddPiece(Square.At(7, 0), leftRook);
+
+            var rightRook = new Rook(Player.White);
+            board.AddPiece(Square.At(7, 7), rightRook);
+
+            var whiteObstruction = new Bishop(Player.White);
+            board.AddPiece(Square.At(7, 1), whiteObstruction);
+
+            var blackObstruction = new Bishop(Player.Black);
+            board.AddPiece(Square.At(7, 5), blackObstruction);
+
+            var moves = king.GetAvailableMoves(board);
+
+            var disallowedMoves = new List<Square>
+            {
+                Square.At(7,1),
+                Square.At(7,2),
+                Square.At(7,5),
+                Square.At(7,6)
+            };
+
+            moves.Should().NotIntersectWith(disallowedMoves);
+        }
+
+        [Test]
+        public void BlackKings_CannotCastle_PastObstruction()
+        {
+            var board = new Board();
+
+            var king = new King(Player.Black);
+            board.AddPiece(Square.At(0, 4), king);
+
+            var leftRook = new Rook(Player.Black);
+            board.AddPiece(Square.At(0, 0), leftRook);
+
+            var rightRook = new Rook(Player.Black);
+            board.AddPiece(Square.At(0, 7), rightRook);
+
+            var whiteObstruction = new Bishop(Player.White);
+            board.AddPiece(Square.At(0,1),whiteObstruction);
+
+            var blackObstruction = new Bishop(Player.Black);
+            board.AddPiece(Square.At(0, 5), blackObstruction);
+
+            var moves = king.GetAvailableMoves(board);
+
+            var disallowedMoves = new List<Square>
+            {
+                Square.At(0,0),
+                Square.At(0,1),
+                Square.At(0,2),
+                Square.At(0,5),
+                Square.At(0,6)
+            };
+
+            moves.Should().NotIntersectWith(disallowedMoves);
+        }
     }
 }
