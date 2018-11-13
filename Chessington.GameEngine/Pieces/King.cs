@@ -48,13 +48,24 @@ namespace Chessington.GameEngine.Pieces
 
                         if (leftRook != null && !leftRook.HasMoved)
                         {
-                            availableCastlingMoves.Add(Square.At(7, 2));
-                        }
+                            if (board.GetPiece(Square.At(7, 1)) == null
+                                && board.GetPiece(Square.At(7, 2)) == null
+                                && board.GetPiece(Square.At(7, 3)) == null
+                            )
+                            {
+                                availableCastlingMoves.Add(Square.At(7, 2));
+                            }
+                            }
 
                         if (rightRook != null && !rightRook.HasMoved)
                         {
-                            availableCastlingMoves.Add(Square.At(7, 6));
-                        }
+                            if (board.GetPiece(Square.At(7,5)) == null
+                                && board.GetPiece(Square.At(7,6)) == null
+                            )
+                            {
+                                availableCastlingMoves.Add(Square.At(7,6));
+                            }
+                            }
                         break;
                     }
 
@@ -65,12 +76,25 @@ namespace Chessington.GameEngine.Pieces
 
                         if (leftRook != null && !leftRook.HasMoved)
                         {
-                            availableCastlingMoves.Add(Square.At(0, 2));
+                            if (board.GetPiece(Square.At(0,1))==null
+                                && board.GetPiece(Square.At(0, 2)) == null
+                                && board.GetPiece(Square.At(0, 3)) == null
+                            )
+                            {
+                                availableCastlingMoves.Add(Square.At(0, 2));
+                            }
+                            
                         }
 
                         if (rightRook != null && !rightRook.HasMoved)
                         {
-                            availableCastlingMoves.Add(Square.At(0,6));
+                            if (board.GetPiece(Square.At(0, 5)) == null
+                                && board.GetPiece(Square.At(0, 6)) == null
+                            )
+                            {
+                                availableCastlingMoves.Add(Square.At(0, 6));
+                            }
+                                
                         }
                         break;
                     }

@@ -143,7 +143,6 @@ namespace Chessington.GameEngine.Tests.Pieces
             {
                 Square.At(7,1),
                 Square.At(7,2),
-                Square.At(7,5),
                 Square.At(7,6)
             };
 
