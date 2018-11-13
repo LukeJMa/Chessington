@@ -282,5 +282,42 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().NotContain(Square.At(5, 1 + relativeColumnPosition));
         }
 
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void WhitePawns_CanCapture_EnPassant_OnBlackPawn(int relativeColumnPosition)
+        {
+            var board = new Board(Player.White);
+
+            var pawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(4, 1), pawn);
+            pawn.MoveTo(board, Square.At(3, 1));
+
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(1, 1 + relativeColumnPosition), blackPawn);
+            blackPawn.MoveTo(board, Square.At(3, 1 + relativeColumnPosition));
+            
+            pawn.MoveTo(board,Square.At(2, 1 + relativeColumnPosition));
+
+            board.GetPiece(Square.At(3, 1 + relativeColumnPosition)).ShouldBeEquivalentTo(null);
+        }
+
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void BlackPawns_CanCapture_EnPassant_OnWhitePawn(int relativeColumnPosition)
+        {
+            var board = new Board(Player.Black);
+
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 1), pawn);
+            pawn.MoveTo(board, Square.At(4, 1));
+
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(6, 1 + relativeColumnPosition), whitePawn);
+            whitePawn.MoveTo(board, Square.At(4, 1 + relativeColumnPosition));
+
+            pawn.MoveTo(board,Square.At(5, 1 + relativeColumnPosition));
+
+            board.GetPiece(Square.At(4, 1 + relativeColumnPosition)).ShouldBeEquivalentTo(null);
+        }
     }
 }

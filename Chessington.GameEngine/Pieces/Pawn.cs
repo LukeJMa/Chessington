@@ -30,6 +30,7 @@ namespace Chessington.GameEngine.Pieces
 
                 // En passant movement
                 if (board.LastMoved is Pawn
+                    && board.LastMoved.Player != Player
                     && board.LastMoved.MoveCount==1
                     && lastMovedSquare.Row == 3
                     && currentSquare.Row == 3
@@ -94,6 +95,7 @@ namespace Chessington.GameEngine.Pieces
 
             // En passant movement
             if (board.LastMoved is Pawn
+                && board.LastMoved.Player != Player
                 && board.LastMoved.MoveCount == 1
                 && lastMovedSquare.Row == 4
                 && currentSquare.Row == 4
