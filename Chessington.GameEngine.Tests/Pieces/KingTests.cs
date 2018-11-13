@@ -152,7 +152,7 @@ namespace Chessington.GameEngine.Tests.Pieces
         [Test]
         public void BlackKings_CannotCastle_PastObstruction()
         {
-            var board = new Board();
+            var board = new Board(Player.Black);
 
             var king = new King(Player.Black);
             board.AddPiece(Square.At(0, 4), king);
@@ -181,6 +181,62 @@ namespace Chessington.GameEngine.Tests.Pieces
             };
 
             moves.Should().NotIntersectWith(disallowedMoves);
+        }
+
+        [TestCase(0,Player.White)]
+        [TestCase(1, Player.White)]
+        [TestCase(2, Player.White)]
+        [TestCase(3, Player.White)]
+        [TestCase(5, Player.White)]
+        [TestCase(6, Player.White)]
+        [TestCase(7, Player.White)]
+        [TestCase(0, Player.Black)]
+        [TestCase(1, Player.Black)]
+        [TestCase(2, Player.Black)]
+        [TestCase(3, Player.Black)]
+        [TestCase(5, Player.Black)]
+        [TestCase(6, Player.Black)]
+        [TestCase(7, Player.Black)]
+        public void Kings_CannotCastle_ThroughAttackedSquares(int attackedCol,Player player)
+        {
+            var board = new Board(player);
+
+            var startRow = player == Player.White ? 7 : 0;
+            var attackingPlayer = player == Player.White ? Player.Black : Player.White;
+
+            var king = new King(player);
+            board.AddPiece(Square.At(startRow, 4), king);
+
+            var leftRook = new Rook(player);
+            board.AddPiece(Square.At(startRow, 0), leftRook);
+
+            var rightRook = new Rook(player);
+            board.AddPiece(Square.At(startRow, 7), rightRook);
+
+            var attackingRook = new Rook(attackingPlayer);
+            board.AddPiece(Square.At(6,attackedCol),attackingRook);
+
+            var moves = king.GetAvailableMoves(board);
+
+            var disallowedMoves = new List<Square>();
+
+            if (attackedCol < 2)
+            {
+                moves.Should().Contain(Square.At(startRow, 2));
+            }
+            else if (attackedCol < 4)
+            {
+                moves.Should().NotContain(Square.At(startRow, 2));
+            }
+            else if (attackedCol < 7)
+            {
+                moves.Should().NotContain(Square.At(startRow, 6));
+            }
+            else
+            {
+                moves.Should().Contain(Square.At(startRow, 6));
+            }
+
         }
     }
 }
