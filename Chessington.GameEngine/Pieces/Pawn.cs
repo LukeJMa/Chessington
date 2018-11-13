@@ -15,6 +15,7 @@ namespace Chessington.GameEngine.Pieces
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
             var currentSquare = board.FindPiece(this);
+            var lastMovedSquare = board.FindPiece(board.LastMoved);
 
             // White piece
             if (Player == Player.White)
@@ -24,6 +25,24 @@ namespace Chessington.GameEngine.Pieces
                 if (currentSquare.Row-1<0 ) 
                 {
                     return availableWhiteMoves;
+                }
+
+                // Add en passant movement
+                if (board.LastMoved is Pawn
+                    && lastMovedSquare.Row == 3
+                    && currentSquare.Row == 3
+                )
+                {
+                    if (lastMovedSquare.Col == currentSquare.Col + 1
+                        && board.GetPiece(Square.At(lastMovedSquare.Row - 1, lastMovedSquare.Col)) == null)
+                    {
+                        availableWhiteMoves.Add(Square.At(lastMovedSquare.Row - 1, lastMovedSquare.Col));
+                    }
+                    else if (lastMovedSquare.Col == currentSquare.Col - 1
+                             && board.GetPiece(Square.At(lastMovedSquare.Row - 1, lastMovedSquare.Col)) == null)
+                    {
+                        availableWhiteMoves.Add(Square.At(lastMovedSquare.Row - 1, lastMovedSquare.Col));
+                    }
                 }
 
                 if (currentSquare.Col - 1 >= 0 &&
@@ -69,6 +88,24 @@ namespace Chessington.GameEngine.Pieces
             if (currentSquare.Row + 1 > 7 )
             {
                 return availableBlackMoves;
+            }
+
+            // Add en passant movement
+            if (board.LastMoved is Pawn
+                && lastMovedSquare.Row == 4
+                && currentSquare.Row == 4
+            )
+            {
+                if (lastMovedSquare.Col == currentSquare.Col + 1
+                    && board.GetPiece(Square.At(lastMovedSquare.Row + 1, lastMovedSquare.Col)) == null)
+                {
+                    availableBlackMoves.Add(Square.At(lastMovedSquare.Row + 1, lastMovedSquare.Col));
+                }
+                else if (lastMovedSquare.Col == currentSquare.Col - 1
+                         && board.GetPiece(Square.At(lastMovedSquare.Row + 1, lastMovedSquare.Col)) == null)
+                {
+                    availableBlackMoves.Add(Square.At(lastMovedSquare.Row + 1, lastMovedSquare.Col));
+                }
             }
 
             if (currentSquare.Col -1 >=0 &&

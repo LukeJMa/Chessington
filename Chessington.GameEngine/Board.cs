@@ -9,7 +9,8 @@ namespace Chessington.GameEngine
     {
         private readonly Piece[,] board;
         public Player CurrentPlayer { get; private set; }
-        public IList<Piece> CapturedPieces { get; private set; } 
+        public IList<Piece> CapturedPieces { get; private set; }
+        public Piece LastMoved { get; set; }
 
         public Board()
             : this(Player.White) { }
