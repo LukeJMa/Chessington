@@ -19,6 +19,11 @@ namespace Chessington.GameEngine.Pieces
             // White piece
             if (Player == Player.White)
             {
+                if (currentSquare.Row-1<0)
+                {
+                    return Enumerable.Empty<Square>();
+                }
+
                 if (board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col)) != null)
                 {
                     return Enumerable.Empty<Square>();
@@ -26,13 +31,13 @@ namespace Chessington.GameEngine.Pieces
 
                 if (HasMoved)
                 {
-                    return new List<Square>
+                        return new List<Square>
                         {new Square(currentSquare.Row - 1, currentSquare.Col)};
                 }
 
-                if (board.GetPiece(Square.At(currentSquare.Row - 2, currentSquare.Col)) != null)
+                if (currentSquare.Row -2<0 || board.GetPiece(Square.At(currentSquare.Row - 2, currentSquare.Col)) != null)
                 {
-                    return Enumerable.Empty<Square>();
+                    return new List<Square> {new Square(currentSquare.Row - 1, currentSquare.Col)};
                 }
 
                 return new List<Square>
@@ -40,9 +45,15 @@ namespace Chessington.GameEngine.Pieces
                     new Square(currentSquare.Row - 1, currentSquare.Col),
                     new Square(currentSquare.Row - 2, currentSquare.Col)
                 };
+
             }
 
             // Black piece
+
+            if (currentSquare.Row + 1 > 7)
+            {
+                return Enumerable.Empty<Square>();
+            }
 
             if (board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col)) != null)
             {
@@ -51,13 +62,17 @@ namespace Chessington.GameEngine.Pieces
 
             if (HasMoved)
             {
-                return new List<Square>
+                if (currentSquare.Row+1<8)
+                {
+                    return new List<Square>
                     {new Square(currentSquare.Row + 1, currentSquare.Col)};
+                }
+                return Enumerable.Empty<Square>();
             }
 
-            if (board.GetPiece(Square.At(currentSquare.Row + 2, currentSquare.Col)) != null)
+            if (currentSquare.Row + 2>7 || board.GetPiece(Square.At(currentSquare.Row + 2, currentSquare.Col)) != null)
             {
-                return Enumerable.Empty<Square>();
+                return new List<Square> {new Square(currentSquare.Row + 1, currentSquare.Col)};
             }
 
             return new List<Square>

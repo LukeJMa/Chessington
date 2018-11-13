@@ -22,6 +22,8 @@ namespace Chessington.GameEngine.Pieces
             availableMoves.Add(Square.At(currentSquare.Row+2, currentSquare.Col+1));
             availableMoves.Add(Square.At(currentSquare.Row+2, currentSquare.Col-1));
 
+            availableMoves.RemoveAll(s => s.Row<0 || s.Row>7 || s.Col <0 || s.Col >7);
+
             return availableMoves;
         }
     }
