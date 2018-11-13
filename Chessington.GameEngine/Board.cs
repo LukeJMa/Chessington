@@ -121,5 +121,22 @@ namespace Chessington.GameEngine
                    && square.Col >= 0
                    && square.Col < GameSettings.BoardSize;
         }
+
+        public IEnumerable<Square> GetSquaresAttackedBy(Player attackingPlayer)
+        {
+            var attackedSquares = new List<Square>();
+            foreach (Piece piece in board)
+            {
+                if (piece != null && piece.Player == attackingPlayer)
+                {
+                    var availableMoves = piece.GetAvailableMoves(this);
+                    foreach (Square square in availableMoves)
+                    {
+                        attackedSquares.Add(square);
+                    }
+                }
+            }
+            return attackedSquares;
+        }
     }
 }

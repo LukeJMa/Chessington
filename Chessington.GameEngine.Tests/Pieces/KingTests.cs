@@ -218,7 +218,6 @@ namespace Chessington.GameEngine.Tests.Pieces
 
             var moves = king.GetAvailableMoves(board);
 
-            var disallowedMoves = new List<Square>();
 
             if (attackedCol < 2)
             {

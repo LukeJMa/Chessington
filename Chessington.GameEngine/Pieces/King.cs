@@ -43,6 +43,7 @@ namespace Chessington.GameEngine.Pieces
                 {
                     case Player.White:
                     {
+                        var attackedSquares = board.GetSquaresAttackedBy(Player.Black);
                         var leftRook = board.GetPiece(Square.At(7, 0));
                         var rightRook = board.GetPiece(Square.At(7, 7));
 
@@ -53,8 +54,18 @@ namespace Chessington.GameEngine.Pieces
                                 && board.GetPiece(Square.At(7, 3)) == null
                             )
                             {
-                                availableCastlingMoves.Add(Square.At(7, 2));
-                            }
+                                if (!attackedSquares
+                                    .Intersect(new List<Square>
+                                    {
+                                        Square.At(7,2),
+                                        Square.At(7,3),
+                                        Square.At(7,4)
+                                    }).Any()
+                                )
+                                {
+                                    availableCastlingMoves.Add(Square.At(7, 2));
+                                }
+                                }
                             }
 
                         if (rightRook != null && !rightRook.HasMoved)
@@ -63,14 +74,25 @@ namespace Chessington.GameEngine.Pieces
                                 && board.GetPiece(Square.At(7,6)) == null
                             )
                             {
-                                availableCastlingMoves.Add(Square.At(7,6));
-                            }
+                                if (!attackedSquares
+                                    .Intersect(new List<Square>
+                                    {
+                                        Square.At(7,4),
+                                        Square.At(7,5),
+                                        Square.At(7,6)
+                                    }).Any()
+                                )
+                                {
+                                    availableCastlingMoves.Add(Square.At(7, 6));
+                                }
+                                }
                             }
                         break;
                     }
 
                     case Player.Black:
                     {
+                        var attackedSquares = board.GetSquaresAttackedBy(Player.White);
                         var leftRook = board.GetPiece(Square.At(0, 0));
                         var rightRook = board.GetPiece(Square.At(0, 7));
 
@@ -81,7 +103,19 @@ namespace Chessington.GameEngine.Pieces
                                 && board.GetPiece(Square.At(0, 3)) == null
                             )
                             {
-                                availableCastlingMoves.Add(Square.At(0, 2));
+                                
+                                if (!attackedSquares
+                                    .Intersect(new List<Square>
+                                    {
+                                        Square.At(0,2),
+                                        Square.At(0,3),
+                                        Square.At(0,4)
+                                    }).Any()
+                                    )
+                                {
+                                    availableCastlingMoves.Add(Square.At(0, 2));
+                                }
+                                
                             }
                             
                         }
@@ -92,8 +126,19 @@ namespace Chessington.GameEngine.Pieces
                                 && board.GetPiece(Square.At(0, 6)) == null
                             )
                             {
-                                availableCastlingMoves.Add(Square.At(0, 6));
-                            }
+                                if (!attackedSquares
+                                    .Intersect(new List<Square>
+                                    {
+                                        Square.At(0,4),
+                                        Square.At(0,5),
+                                        Square.At(0,6)
+                                    })
+                                    .Any()
+                                )
+                                {
+                                    availableCastlingMoves.Add(Square.At(0, 6));
+                                }
+                                }
                                 
                         }
                         break;
