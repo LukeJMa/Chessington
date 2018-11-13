@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using Chessington.GameEngine.Pieces;
 
 namespace Chessington.GameEngine
@@ -127,16 +128,27 @@ namespace Chessington.GameEngine
             var attackedSquares = new List<Square>();
             foreach (Piece piece in board)
             {
+                var availableMoves = new List<Square>();
                 if (piece != null && piece.Player == attackingPlayer)
                 {
-                    var availableMoves = piece.GetAvailableMoves(this);
+                    availableMoves = availableMoves.Concat(piece.GetAvailableMoves(this)).ToList();
                     foreach (Square square in availableMoves)
                     {
                         attackedSquares.Add(square);
                     }
+                    if (piece is Pawn)
+                    {
+                        var pieceSquare = FindPiece(piece);
+                        availableMoves.RemoveAll(square => square.Col == pieceSquare.Col);
+                    }
+                    
                 }
+
+                attackedSquares = attackedSquares.Concat(availableMoves).ToList();
             }
             return attackedSquares;
         }
     }
+
+    
 }
