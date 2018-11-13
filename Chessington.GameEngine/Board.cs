@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using Chessington.GameEngine.Pieces;
 
 namespace Chessington.GameEngine
@@ -60,6 +61,7 @@ namespace Chessington.GameEngine
             }
 
             CheckIfEnPassantMove(from,to);
+            //CheckIfCastlingMove(from, to);
 
             //Move the piece and set the 'from' square to be empty.
             board[to.Row, to.Col] = board[from.Row, from.Col];
@@ -67,6 +69,17 @@ namespace Chessington.GameEngine
 
             CurrentPlayer = movingPiece.Player == Player.White ? Player.Black : Player.White;
             OnCurrentPlayerChanged(CurrentPlayer);
+        }
+
+        private void CheckIfCastlingMove(Square from, Square to)
+        {
+            var movingPiece = board[from.Row, from.Col];
+
+            if (movingPiece is King)
+            {
+
+            }
+            throw new NotImplementedException();
         }
 
         private void CheckIfEnPassantMove(Square from, Square to)

@@ -29,5 +29,6 @@ namespace Chessington.GameEngine.Tests
 
             location.Should().Be(square);
         }
+
     }
 }

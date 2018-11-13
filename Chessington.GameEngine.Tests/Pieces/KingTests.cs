@@ -237,5 +237,37 @@ namespace Chessington.GameEngine.Tests.Pieces
             }
 
         }
+
+        [Test]
+        public void WhiteKings_Castling_MovesRook()
+        {
+            var board = new Board();
+
+            var king = new King(Player.White);
+            board.AddPiece(Square.At(7, 4), king);
+
+            var leftRook = new Rook(Player.White);
+            board.AddPiece(Square.At(7, 0), leftRook);
+            
+            board.MovePiece(Square.At(7, 4),Square.At(7,2));
+
+            board.GetPiece(Square.At(7, 0)).Should().Be(null);
+        }
+
+        [Test]
+        public void BlackKings_Castling_MovesRook()
+        {
+            var board = new Board();
+
+            var king = new King(Player.Black);
+            board.AddPiece(Square.At(0, 4), king);
+
+            var rightRook = new Rook(Player.Black);
+            board.AddPiece(Square.At(0, 7), rightRook);
+
+            board.MovePiece(Square.At(0, 4), Square.At(0, 6));
+
+            board.GetPiece(Square.At(0, 7)).Should().Be(null);
+        }
     }
 }
