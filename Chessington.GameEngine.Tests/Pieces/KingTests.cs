@@ -113,8 +113,8 @@ namespace Chessington.GameEngine.Tests.Pieces
 
             var moves = king.GetAvailableMoves(board);
 
-            moves.Should().Contain(Square.At(7, 2));
-            moves.Should().Contain(Square.At(7, 6));
+            moves.Should().Contain(Square.At(0, 2));
+            moves.Should().Contain(Square.At(0, 6));
         }
     }
 }
