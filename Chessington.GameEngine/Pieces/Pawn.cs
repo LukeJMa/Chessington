@@ -21,7 +21,26 @@ namespace Chessington.GameEngine.Pieces
             {
                 var availableWhiteMoves = new List<Square>();
 
-                if (currentSquare.Row-1<0 || board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col)) != null)
+                if (currentSquare.Row-1<0 ) 
+                {
+                    return availableWhiteMoves;
+                }
+
+                if (currentSquare.Col - 1 >= 0 &&
+                    board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col - 1)) != null &&
+                    board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col - 1)).Player != Player)
+                {
+                    availableWhiteMoves.Add(Square.At(currentSquare.Row - 1, currentSquare.Col - 1));
+                }
+
+                if (currentSquare.Col + 1 < 8 &&
+                    board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col + 1)) != null &&
+                    board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col + 1)).Player != Player)
+                {
+                    availableWhiteMoves.Add(Square.At(currentSquare.Row - 1, currentSquare.Col + 1));
+                }
+
+                if (board.GetPiece(Square.At(currentSquare.Row - 1, currentSquare.Col)) != null) 
                 {
                     return availableWhiteMoves;
                 }
@@ -47,7 +66,26 @@ namespace Chessington.GameEngine.Pieces
 
             var availableBlackMoves = new List<Square>();
 
-            if (currentSquare.Row + 1 > 7 || board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col)) != null)
+            if (currentSquare.Row + 1 > 7 )
+            {
+                return availableBlackMoves;
+            }
+
+            if (currentSquare.Col -1 >=0 &&
+                board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col - 1)) != null &&
+                board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col - 1)).Player != Player)
+            {
+                availableBlackMoves.Add(Square.At(currentSquare.Row + 1, currentSquare.Col - 1));
+            }
+
+            if (currentSquare.Col + 1 < 8 &&
+                board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col + 1)) != null &&
+                board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col + 1)).Player != Player)
+            {
+                availableBlackMoves.Add(Square.At(currentSquare.Row + 1, currentSquare.Col + 1));
+            }
+
+            if (board.GetPiece(Square.At(currentSquare.Row + 1, currentSquare.Col)) != null)
             {
                 return availableBlackMoves;
             }
