@@ -23,6 +23,8 @@ namespace Chessington.GameEngine.Pieces
             }
     
             availableMoves.Remove(Square.At(currentSquare.Row, currentSquare.Col));
+            availableMoves.RemoveAll(s => board.GetPiece(s) != null && board.GetPiece(s).Player == Player);
+
             return availableMoves;
         }
     }
