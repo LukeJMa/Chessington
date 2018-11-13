@@ -319,5 +319,6 @@ namespace Chessington.GameEngine.Tests.Pieces
 
             board.GetPiece(Square.At(4, 1 + relativeColumnPosition)).ShouldBeEquivalentTo(null);
         }
+
     }
 }
