@@ -155,12 +155,6 @@ namespace Chessington.GameEngine
                     {
                         attackedSquares.Add(square);
                     }
-                    if (piece is Pawn)
-                    {
-                        var pieceSquare = FindPiece(piece);
-                        availableMoves.RemoveAll(square => square.Col == pieceSquare.Col);
-                    }
-                    
                 }
 
                 attackedSquares = attackedSquares.Concat(availableMoves).ToList();

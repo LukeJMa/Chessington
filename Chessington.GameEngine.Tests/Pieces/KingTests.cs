@@ -252,6 +252,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             board.MovePiece(Square.At(7, 4),Square.At(7,2));
 
             board.GetPiece(Square.At(7, 0)).Should().Be(null);
+            board.GetPiece(Square.At(7, 3)).Should().Be(leftRook);
         }
 
         [Test]
@@ -268,6 +269,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             board.MovePiece(Square.At(0, 4), Square.At(0, 6));
 
             board.GetPiece(Square.At(0, 7)).Should().Be(null);
+            board.GetPiece(Square.At(0, 5)).Should().Be(rightRook);
         }
     }
 }
