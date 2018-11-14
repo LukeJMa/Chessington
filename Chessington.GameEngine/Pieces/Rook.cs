@@ -10,6 +10,11 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
+            return GetAttackingMoves(board);
+        }
+
+        public override IEnumerable<Square> GetAttackingMoves(Board board)
+        {
             return CommonAvailableMovementGetter.GetAvailableLateralMovement(board, this);
         }
 

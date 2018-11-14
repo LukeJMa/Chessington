@@ -61,7 +61,7 @@ namespace Chessington.GameEngine
             }
 
             CheckIfEnPassantMove(from,to);
-            //CheckIfCastlingMove(from, to);
+            CheckIfCastlingMove(from, to);
 
             //Move the piece and set the 'from' square to be empty.
             board[to.Row, to.Col] = board[from.Row, from.Col];
@@ -77,9 +77,15 @@ namespace Chessington.GameEngine
 
             if (movingPiece is King)
             {
-
+                if (to.Col - from.Col == 2)
+                {
+                    MovePiece(Square.At(from.Row, 7), Square.At(from.Row, 5));
+                }
+                else if (to.Col - from.Col == -2)
+                {
+                    MovePiece(Square.At(from.Row,0),Square.At(from.Row,3) );
+                }
             }
-            throw new NotImplementedException();
         }
 
         private void CheckIfEnPassantMove(Square from, Square to)
@@ -144,7 +150,7 @@ namespace Chessington.GameEngine
                 var availableMoves = new List<Square>();
                 if (piece != null && piece.Player == attackingPlayer)
                 {
-                    availableMoves = availableMoves.Concat(piece.GetAvailableMoves(this)).ToList();
+                    availableMoves = availableMoves.Concat(piece.GetAttackingMoves(this)).ToList();
                     foreach (Square square in availableMoves)
                     {
                         attackedSquares.Add(square);

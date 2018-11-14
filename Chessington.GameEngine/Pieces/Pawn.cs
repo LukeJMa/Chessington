@@ -147,6 +147,13 @@ namespace Chessington.GameEngine.Pieces
             availableBlackMoves.Add(new Square(currentSquare.Row + 2, currentSquare.Col));
             return availableBlackMoves;
         }
-          
+
+        public override IEnumerable<Square> GetAttackingMoves(Board board)
+        {
+            var currentSquare = board.FindPiece(this);
+            var availableMoves = GetAvailableMoves(board).ToList();
+            availableMoves.RemoveAll(square => square.Col ==currentSquare.Col);
+            return availableMoves;
+        }
     }
 }

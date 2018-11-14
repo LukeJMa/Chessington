@@ -18,6 +18,7 @@ namespace Chessington.GameEngine.Pieces
         public int MoveCount { get; set; }
 
         public abstract IEnumerable<Square> GetAvailableMoves(Board board);
+        public abstract IEnumerable<Square> GetAttackingMoves(Board board);
 
         public void MoveTo(Board board, Square newSquare)
         {

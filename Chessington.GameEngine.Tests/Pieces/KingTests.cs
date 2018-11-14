@@ -257,7 +257,7 @@ namespace Chessington.GameEngine.Tests.Pieces
         [Test]
         public void BlackKings_Castling_MovesRook()
         {
-            var board = new Board();
+            var board = new Board(Player.Black);
 
             var king = new King(Player.Black);
             board.AddPiece(Square.At(0, 4), king);

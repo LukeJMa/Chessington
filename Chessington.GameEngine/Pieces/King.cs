@@ -11,25 +11,31 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            var availableMoves = new List<Square>();
+            var availableAttackingMoves = GetAttackingMoves(board); 
+            var availableCastlingMoves = GetCastlingMoves(board);
+            var availableMoves=availableAttackingMoves.Concat(availableCastlingMoves).ToList();
+    
+            return availableMoves;
+        }
+
+        public override IEnumerable<Square> GetAttackingMoves(Board board)
+        {
+            var attackingMoves = new List<Square>();
             var currentSquare = board.FindPiece(this);
 
-            for (var i=-1; i<=1;i++)
+            for (var i = -1; i <= 1; i++)
             {
                 for (var j = -1; j <= 1; j++)
                 {
-                    if (0<= currentSquare.Row+i && currentSquare.Row +i <8 && 0<= currentSquare.Col + j && currentSquare.Col + j<8)
-                    availableMoves.Add(Square.At(currentSquare.Row+i,currentSquare.Col+j));
+                    if (0 <= currentSquare.Row + i && currentSquare.Row + i < 8 && 0 <= currentSquare.Col + j && currentSquare.Col + j < 8)
+                        attackingMoves.Add(Square.At(currentSquare.Row + i, currentSquare.Col + j));
                 }
             }
 
-            var availableCastlingMoves = GetCastlingMoves(board);
-            availableMoves=availableMoves.Concat(availableCastlingMoves).ToList();
-    
-            availableMoves.Remove(Square.At(currentSquare.Row, currentSquare.Col));
-            availableMoves.RemoveAll(s => board.GetPiece(s) != null && board.GetPiece(s).Player == Player);
+            attackingMoves.Remove(Square.At(currentSquare.Row, currentSquare.Col));
+            attackingMoves.RemoveAll(s => board.GetPiece(s) != null && board.GetPiece(s).Player == Player);
 
-            return availableMoves;
+            return attackingMoves;
         }
 
         public IEnumerable<Square> GetCastlingMoves(Board board)
